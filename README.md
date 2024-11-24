@@ -14,7 +14,7 @@ Data warehousing solution that reflects real-world data engineering  challenges,
 | `Orders`           | `Order_Items`    | `Consists of`          | `OrderID (PK)`     | `OrderID (FK)`    | One Order → Many Items (1:∞)    |
 | `Orders`           | `Order_Status`   | `In`                   | `OrderID (PK)`     | `OrderID (FK)`    | One Order → Many Statuses (1:∞) |
 | `Members`          | `Preferences`    | `Has`                  | `MemberID (PK)`    | `MemberID (FK)`   | One Member → Many Preferences (1:∞) |
-| `Marketing`        | `Orders`         | One-to-Many            | `StoreID `         | `StoreID`         | One Store → Many or zero Orders (0:∞)   |
+
 
 ### Keys
 - #### Primary Keys (PK): 
