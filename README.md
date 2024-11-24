@@ -16,6 +16,19 @@ Data warehousing solution that reflects real-world data engineering  challenges,
 | `Members`          | `Preferences`    | `Has`                  | `MemberID (PK)`    | `MemberID (FK)`   | One Member → Many Preferences (1:∞) |
 | `Marketing`        | `Orders`         | One-to-Many            | `StoreID `         | `StoreID`         | One Store → Many or zero Orders (0:∞)   |
 
+### Keys
+- #### Primary Keys (PK): 
+  - `CampaignID` for Marketing,
+  - `MemberID` for Members,
+  - `OrderID` for Orders.
+
+- #### Foreign Keys (FK):
+  - `MemberID` in Preferences references Members.
+  - `MemberID` in Orders references Members.
+  - `CampaignID` in Orders references Marketing.
+  - `OrderID` in Order_Items references Orders.
+  - `OrderID` in Order_Status references Orders.
+
 ### Indexing
 - #### Foreign Keys (FKs)
 ```
@@ -28,9 +41,22 @@ CREATE INDEX idx_memberid_preferences ON Preferences(MemberID);
 ```
 - #### Composite Indexes
 
-Composite indexes are helpful when queries filter by multiple columns.
-Example: If queries often filter by MemberID and OrderDate in Orders:
+Composite indexes for queries filter by multiple columns.
 ```
 CREATE INDEX idx_memberid_orderdate_orders ON Orders(MemberID, OrderDate);
 CREATE INDEX idx_storeid_targetaudience_marketing ON Marketing(StoreID, TargetAudience);
 ```
+- ### Overview of files
+  - data/ : Contains csv files
+  - docker/db.sql: Contains query to create tables and indexes
+  - docker/dockerfile: dDocker file for etl container
+  - docker/etl_load_data.py: Python file for the ETL pipeline
+  - docker/queries: Includes all the querires requested in section 3 of the assignment
+
+- ### How to run
+  - Open a terminal and navigate to the docker folder. 
+  - Run the following command to start the containers: 
+    `docker-compose up -d`
+  - This will create 3 container `pgadmin_container`, `postgres_container`, `etl_container`
+  - When etl_container will be created, it will automatically run the `db.sql` script to create tables and indexes, then it      will run the `etl_load_data.py` script to run the pipeline and in the end it will run the requested queries one by one
+  - Access the pgAdmin here: `http://localhost:5050` to views tables created and data within it.
