@@ -2,6 +2,10 @@ import os
 import pandas as pd
 import psycopg2
 from psycopg2 import sql
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Database connection configuration
 DB_CONFIG = {
@@ -35,7 +39,7 @@ def load_csv_to_db(cursor, table_name, csv_file):
     """
     cursor.execute(f"TRUNCATE TABLE {table_name} CASCADE;")
 
-    print(f"Loading data from {csv_file} into {table_name}...")
+    logger.info(f"Loading data from {csv_file} into {table_name}...")
     data = pd.read_csv(csv_file)
 
     # Convert column names to lowercase for compatibility
@@ -43,11 +47,9 @@ def load_csv_to_db(cursor, table_name, csv_file):
 
     if table_name.lower() == 'members':
         data.rename(columns={'Id': 'memberid'}, inplace=True)
-    
     if table_name.lower() == 'orders':
     # Replace NaN values with None
         data['campaignid'] = data['campaignid'].where(pd.notnull(data['campaignid']), None)
-
     if table_name.lower() == 'order_status':
     # Convert statustimestamp to PostgreSQL-compatible format
         if 'statustimestamp' in data.columns:
@@ -72,7 +74,7 @@ def load_csv_to_db(cursor, table_name, csv_file):
     for _, row in data.iterrows():
         cursor.execute(insert_query, tuple(row))
 
-    print(f"Loaded {len(data)} rows into {table_name}.")
+    logger.info(f"Loaded {len(data)} rows into {table_name}.")
 
 def main():
     """
