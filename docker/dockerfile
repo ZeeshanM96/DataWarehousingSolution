@@ -1,0 +1,26 @@
+# Use an official Python image as the base
+FROM python:3.10-slim
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy the current directory's content into the container
+COPY . /app
+
+# Install required tools and libraries
+RUN apt-get update && \
+    apt-get install -y postgresql-client && \
+    pip install pandas psycopg2-binary && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Create .pgpass file with credentials
+RUN echo "postgres:5432:postgres:postgres:mysecretpassword" > ~/.pgpass && chmod 600 ~/.pgpass
+
+# Set the default command to execute all tasks
+CMD ["bash", "-c", "export PGPASSWORD=mysecretpassword && \
+                     psql -h postgres -U postgres -d postgres -f /db.sql && \
+                     python /app/etl_load_data.py && \
+                     psql -h postgres -U postgres -d postgres -f /query1.sql && \
+                     psql -h postgres -U postgres -d postgres -f /query2.sql && \
+                     psql -h postgres -U postgres -d postgres -f /query3.sql && \
+                     psql -h postgres -U postgres -d postgres -f /query4.sql"]

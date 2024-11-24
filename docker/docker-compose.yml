@@ -33,6 +33,24 @@ services:
       - postgres
     restart: unless-stopped
 
+  etl:
+    container_name: etl_container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    networks:
+      - postgres
+    volumes:
+      - ../data:/app/data
+      - ./db.sql:/db.sql
+      - ./etl_load_data.py:/etl_load_data.py
+      - ./query1.sql:/query1.sql
+      - ./query2.sql:/query2.sql
+      - ./query3.sql:/query3.sql
+      - ./query4.sql:/query4.sql
+  
 networks:
   postgres:
     driver: bridge
