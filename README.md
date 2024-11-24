@@ -2,19 +2,19 @@
 Data warehousing solution that reflects real-world data engineering  challenges, showcasing skills in data modelling, SQL, and Python. 
 
 ### ERD
-![Database ER diagram (crow's foot)](https://github.com/user-attachments/assets/dca3b19d-bc9a-4602-b2f2-234f8fea6012)
+![Database ER diagram (crow's foot) (1)](https://github.com/user-attachments/assets/5d69497d-119d-4d7d-a437-473009f0cacc)
+
 
 ### Entity Relationships Table
 
-
-| **Parent Entity**     | **Child Entity**       | **Relationship Type** | **Parent Key**       | **Child Key**       | **Cardinality**       |
-|------------------------|------------------------|------------------------|-----------------------|----------------------|------------------------|
-| **Marketing**          | **Orders**            | One-to-Many            | `CampaignID PK`       | `CampaignID FK`      | One Campaign → Many Orders |
-| **Marketing**          | **Orders**            | One-to-Many            | `StoreID UNIQUE`      | `StoreID FK`         | One Store → Many Orders    |
-| **Members**            | **Orders**            | One-to-Many            | `MemberID PK`         | `MemberID FK`        | One Member → Many Orders   |
-| **Members**            | **Preferences**       | One-to-Many            | `MemberID PK`         | `MemberID FK`        | One Member → Many Preferences |
-| **Orders**             | **Order_Items**       | One-to-Many            | `OrderID PK`          | `OrderID FK`         | One Order → Many Items    |
-| **Orders**             | **Order_Status**      | One-to-Many            | `OrderID PK`          | `OrderID FK`         | One Order → Many Statuses  |
+| **Parent Entity** | **Child Entity**  | **Relationship Type** | **Parent Key**     | **Child Key**     | **Cardinality**                 |
+|--------------------|-------------------|------------------------|--------------------|-------------------|----------------------------------|
+| `Marketing`        | `Orders`         | `Referenced by`        | `CampaignID (PK)`  | `CampaignID (FK)` | One Campaign → Many Orders (1:∞)|
+| `Members`          | `Orders`         | `Places`               | `MemberID (PK)`    | `MemberID (FK)`   | One Member → Many Orders (1:∞)  |
+| `Orders`           | `Order_Items`    | `Consists of`          | `OrderID (PK)`     | `OrderID (FK)`    | One Order → Many Items (1:∞)    |
+| `Orders`           | `Order_Status`   | `In`                   | `OrderID (PK)`     | `OrderID (FK)`    | One Order → Many Statuses (1:∞) |
+| `Members`          | `Preferences`    | `Has`                  | `MemberID (PK)`    | `MemberID (FK)`   | One Member → Many Preferences (1:∞) |
+| `Marketing          | `Orders`        | One-to-Many            | `StoreID `         | `StoreID`         | One Store → Many or zero Orders (0:∞)   |
 
 ### Indexing
 - #### Foreign Keys (FKs)
