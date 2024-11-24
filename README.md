@@ -31,5 +31,6 @@ CREATE INDEX idx_memberid_preferences ON Preferences(MemberID);
 Composite indexes are helpful when queries filter by multiple columns.
 Example: If queries often filter by MemberID and OrderDate in Orders:
 ```
-CREATE INDEX idx_memberid_orderdate ON Orders(MemberID, OrderDate);
+CREATE INDEX idx_memberid_orderdate_orders ON Orders(MemberID, OrderDate);
+CREATE INDEX idx_storeid_targetaudience_marketing ON Marketing(StoreID, TargetAudience);
 ```
