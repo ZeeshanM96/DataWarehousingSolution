@@ -47,11 +47,11 @@ CREATE INDEX idx_memberid_orderdate_orders ON Orders(MemberID, OrderDate);
 CREATE INDEX idx_storeid_targetaudience_marketing ON Marketing(StoreID, TargetAudience);
 ```
 - ### Overview of files
-  - data/ : Contains csv files
-  - docker/db.sql: Contains query to create tables and indexes
-  - docker/dockerfile: dDocker file for etl container
-  - docker/etl_load_data.py: Python file for the ETL pipeline
-  - docker/queries: Includes all the querires requested in section 3 of the assignment
+  - data/ : Contains csv files.
+  - docker/db.sql: Contains query to create tables and indexes.
+  - docker/dockerfile: Docker file for etl container.
+  - docker/etl_load_data.py: Python file for the ETL pipeline.
+  - docker/query(1-4): Includes all the querires requested in section 3 of the assignment.
 
 - ### How to run
   - Open a terminal and navigate to the docker folder. 
